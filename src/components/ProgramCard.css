@@ -1,0 +1,107 @@
+/* ProgramCard.css */
+.program-card {
+background: white;
+border-radius: 20px;
+padding: 2rem;
+box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05); /* Soft shadow */
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+text-align: left;
+transition: box-shadow 0.3s ease;
+overflow: hidden;
+position: relative;
+height: 100%;
+border: 1px solid rgba(0,0,0,0.02);
+}
+
+/* Green-to-Yellow Accent Highlight (Bottom Border) */
+.program-card::after {
+content: '';
+position: absolute;
+bottom: 0;
+left: 0;
+width: 100%;
+height: 4px;
+background: linear-gradient(to right, #2D5F3F, #FBBF24);
+opacity: 0.7;
+transition: height 0.3s ease;
+}
+
+.program-card:hover::after {
+height: 6px;
+opacity: 1;
+}
+
+/* Icon Wrapper */
+.card-icon-wrapper {
+background-color: rgba(45, 95, 63, 0.1); /* Light Green */
+padding: 1rem;
+border-radius: 50%;
+margin-bottom: 1.5rem;
+color: #2D5F3F;
+font-size: 2rem;
+display: flex;
+justify-content: center;
+align-items: center;
+width: 70px;
+height: 70px;
+}
+
+.card-title {
+font-size: 1.5rem;
+font-weight: 700;
+color: #2D5F3F; /* Green */
+margin-bottom: 0.75rem;
+font-family: 'Inter', sans-serif;
+}
+
+.card-description {
+font-size: 1rem;
+color: #6B7280; /* Neutral Gray */
+line-height: 1.6;
+margin-bottom: 2rem;
+flex-grow: 1;
+}
+
+.learn-more-btn {
+background-color: #FBBF24; /* Yellow Accent */
+color: #2D5F3F; /* Green Text */
+border: none;
+padding: 0.75rem 1.5rem;
+border-radius: 50px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+font-size: 0.95rem;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+}
+
+.learn-more-btn:hover {
+background-color: #2D5F3F;
+color: white;
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(45, 95, 63, 0.3);
+}
+
+/* Responsive Grid in Parent (Generic class helper) */
+.programs-grid {
+display: grid;
+grid-template-columns: repeat(1, 1fr);
+gap: 2rem;
+padding: 2rem;
+}
+
+@media (min-width: 640px) {
+.programs-grid {
+grid-template-columns: repeat(2, 1fr);
+}
+}
+
+@media (min-width: 1024px) {
+.programs-grid {
+grid-template-columns: repeat(3, 1fr);
+}
+}

@@ -1,0 +1,225 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import GalleryImageCard from '../components/GalleryImageCard';
+import LightboxModal from '../components/LightboxModal';
+import './GalleryPage.css';
+
+const GalleryPage = () => {
+    const [activeCategory, setActiveCategory] = useState('All');
+    const [selectedImage, setSelectedImage] = useState(null);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
+    const categories = ['All', 'Donation Drives', 'Events', 'Volunteers', 'Community'];
+
+    const galleryImages = [
+        {
+            id: 1,
+            src: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=2073&auto=format&fit=crop",
+            caption: "Children discovering new books at our library",
+            category: "Community"
+        },
+        {
+            id: 2,
+            src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=2022&auto=format&fit=crop",
+            caption: "Annual book distribution drive in rural schools",
+            category: "Donation Drives"
+        },
+        {
+            id: 3,
+            src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2070&auto=format&fit=crop",
+            caption: "Volunteer training workshop",
+            category: "Volunteers"
+        },
+        {
+            id: 4,
+            src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=2032&auto=format&fit=crop",
+            caption: "Young reader enjoying a storybook",
+            category: "Community"
+        },
+        {
+            id: 5,
+            src: "https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2073&auto=format&fit=crop",
+            caption: "Organizing books for distribution",
+            category: "Donation Drives"
+        },
+        {
+            id: 6,
+            src: "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=2028&auto=format&fit=crop",
+            caption: "Community book fair event",
+            category: "Events"
+        },
+        {
+            id: 7,
+            src: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop",
+            caption: "Digital literacy training session",
+            category: "Events"
+        },
+        {
+            id: 8,
+            src: "https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=2070&auto=format&fit=crop",
+            caption: "Reading circle with children",
+            category: "Community"
+        },
+        {
+            id: 9,
+            src: "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=2070&auto=format&fit=crop",
+            caption: "Volunteers packing books for donation",
+            category: "Volunteers"
+        },
+        {
+            id: 10,
+            src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=2070&auto=format&fit=crop",
+            caption: "Mobile library reaching remote villages",
+            category: "Donation Drives"
+        },
+        {
+            id: 11,
+            src: "https://images.unsplash.com/photo-1519682337058-a94d519337bc?q=80&w=2070&auto=format&fit=crop",
+            caption: "Team meeting planning next drive",
+            category: "Volunteers"
+        },
+        {
+            id: 12,
+            src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2071&auto=format&fit=crop",
+            caption: "Storytelling session at community center",
+            category: "Events"
+        }
+    ];
+
+    const filteredImages = activeCategory === 'All'
+        ? galleryImages
+        : galleryImages.filter(img => img.category === activeCategory);
+
+    const handleImageClick = (image) => {
+        setSelectedImage(image);
+        const index = filteredImages.findIndex(img => img.id === image.id);
+        setCurrentImageIndex(index);
+    };
+
+    const handleNext = () => {
+        const nextIndex = (currentImageIndex + 1) % filteredImages.length;
+        setCurrentImageIndex(nextIndex);
+        setSelectedImage(filteredImages[nextIndex]);
+    };
+
+    const handlePrev = () => {
+        const prevIndex = (currentImageIndex - 1 + filteredImages.length) % filteredImages.length;
+        setCurrentImageIndex(prevIndex);
+        setSelectedImage(filteredImages[prevIndex]);
+    };
+
+    return (
+        <div className="gallery-page">
+            {/* Hero Section */}
+            <motion.section
+                className="gallery-hero"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8 }}
+            >
+                <motion.div
+                    className="gallery-hero-content"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                >
+                    <h1 className="gallery-hero-title">Moments of Impact</h1>
+                    <p className="gallery-hero-subtitle">
+                        Witness the joy of reading and the power of community through our journey of spreading literacy.
+                    </p>
+                </motion.div>
+            </motion.section>
+
+            {/* Category Filter */}
+            <section className="gallery-filter-section">
+                <div className="container">
+                    <div className="category-tabs">
+                        {categories.map((category) => (
+                            <motion.button
+                                key={category}
+                                className={`category-tab ${activeCategory === category ? 'active' : ''}`}
+                                onClick={() => setActiveCategory(category)}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                {category}
+                            </motion.button>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Gallery Grid */}
+            <section className="gallery-grid-section">
+                <div className="container">
+                    <motion.div
+                        className="gallery-masonry-grid"
+                        key={activeCategory}
+                        layout
+                    >
+                        {filteredImages.map((image, index) => (
+                            <GalleryImageCard
+                                key={image.id}
+                                image={image}
+                                index={index}
+                                onClick={handleImageClick}
+                            />
+                        ))}
+                    </motion.div>
+                </div>
+            </section>
+
+            {/* CTA Section */}
+            <motion.section
+                className="gallery-cta"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.7 }}
+            >
+                <div className="container">
+                    <h2 className="cta-title">Be Part of Our Story</h2>
+                    <p className="cta-subtitle">
+                        Join us in creating more moments of joy and learning. Your contribution makes a difference.
+                    </p>
+                    <div className="cta-buttons">
+                        <motion.button
+                            className="cta-btn primary"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            Donate Now
+                        </motion.button>
+                        <motion.button
+                            className="cta-btn secondary"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                        >
+                            Become a Volunteer
+                        </motion.button>
+                    </div>
+                </div>
+            </motion.section>
+
+            {/* Lightbox Modal */}
+            <AnimatePresence>
+                {selectedImage && (
+                    <LightboxModal
+                        image={selectedImage}
+                        onClose={() => setSelectedImage(null)}
+                        onNext={handleNext}
+                        onPrev={handlePrev}
+                        hasNext={currentImageIndex < filteredImages.length - 1}
+                        hasPrev={currentImageIndex > 0}
+                    />
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
+
+export default GalleryPage;
