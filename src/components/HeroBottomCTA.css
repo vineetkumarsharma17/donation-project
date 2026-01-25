@@ -1,0 +1,194 @@
+/* Hero Bottom CTA - Centered Below Content */
+
+.hero-bottom-cta {
+position: absolute;
+bottom: 8rem;
+left: 50%;
+transform: translateX(-50%);
+width: 100%;
+max-width: 800px;
+z-index: 10;
+padding: 0 2rem;
+}
+
+.bottom-cta-content {
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+border-radius: 24px;
+padding: 3rem 2.5rem;
+text-align: center;
+box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.bottom-cta-icon {
+display: inline-block;
+margin-bottom: 1.5rem;
+}
+
+.bottom-cta-title {
+font-size: 2rem;
+font-weight: 800;
+color: white;
+margin-bottom: 0.75rem;
+line-height: 1.2;
+}
+
+.bottom-cta-description {
+font-size: 1.05rem;
+color: rgba(255, 255, 255, 0.9);
+margin-bottom: 2rem;
+line-height: 1.5;
+max-width: 600px;
+margin-left: auto;
+margin-right: auto;
+}
+
+.bottom-cta-buttons {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 1rem;
+}
+
+/* Large Donate Button - Bottom Center */
+.hero-donate-btn-large {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 1rem;
+padding: 1.75rem 4rem;
+background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%);
+color: #1f2937;
+border: none;
+border-radius: 60px;
+font-size: 1.5rem;
+font-weight: 800;
+cursor: pointer;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+box-shadow:
+0 12px 35px rgba(250, 204, 21, 0.5),
+0 6px 20px rgba(245, 158, 11, 0.4),
+inset 0 -4px 0 rgba(0, 0, 0, 0.15);
+text-transform: uppercase;
+letter-spacing: 1.5px;
+position: relative;
+overflow: hidden;
+}
+
+.hero-donate-btn-large::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(
+90deg,
+transparent,
+rgba(255, 255, 255, 0.4),
+transparent
+);
+transition: left 0.6s ease;
+}
+
+.hero-donate-btn-large:hover::before {
+left: 100%;
+}
+
+/* Bottom Trust Badge */
+.bottom-trust-badge {
+display: inline-flex;
+align-items: center;
+gap: 0.6rem;
+padding: 0.875rem 1.75rem;
+background: rgba(255, 255, 255, 0.15);
+backdrop-filter: blur(10px);
+border-radius: 50px;
+color: rgba(255, 255, 255, 0.95);
+font-size: 1rem;
+font-weight: 600;
+border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.bottom-trust-badge svg {
+color: #facc15;
+}
+
+/* Right Spacer - Empty space for balance */
+.hero-right-spacer {
+/* Empty div for grid balance */
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+.hero-bottom-cta {
+bottom: 6rem;
+max-width: 90%;
+}
+
+.bottom-cta-content {
+padding: 2.5rem 2rem;
+}
+
+.bottom-cta-title {
+font-size: 1.75rem;
+}
+
+.hero-donate-btn-large {
+padding: 1.5rem 3rem;
+font-size: 1.35rem;
+}
+}
+
+@media (max-width: 768px) {
+.hero-bottom-cta {
+position: relative;
+bottom: auto;
+left: auto;
+transform: none;
+margin-top: 3rem;
+margin-bottom: 2rem;
+max-width: 100%;
+}
+
+.bottom-cta-content {
+padding: 2rem 1.5rem;
+}
+
+.bottom-cta-title {
+font-size: 1.5rem;
+}
+
+.bottom-cta-description {
+font-size: 0.95rem;
+}
+
+.hero-donate-btn-large {
+width: 100%;
+padding: 1.35rem 2.5rem;
+font-size: 1.15rem;
+}
+
+.bottom-trust-badge {
+font-size: 0.9rem;
+padding: 0.75rem 1.5rem;
+}
+}
+
+@media (max-width: 480px) {
+.bottom-cta-title {
+font-size: 1.35rem;
+}
+
+.hero-donate-btn-large {
+padding: 1.2rem 2rem;
+font-size: 1rem;
+letter-spacing: 1px;
+}
+
+.bottom-trust-badge {
+font-size: 0.85rem;
+}
+}

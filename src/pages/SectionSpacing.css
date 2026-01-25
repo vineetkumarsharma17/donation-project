@@ -1,0 +1,151 @@
+/* Section Spacing Fix - Add proper gaps between all sections */
+
+/* Hero Section Bottom Spacing */
+.get-involved-hero {
+margin-bottom: 4rem !important;
+}
+
+/* Ways to Help Section Spacing */
+.ways-to-help-section {
+padding: 5rem 2rem !important;
+margin-bottom: 3rem !important;
+}
+
+/* Impact Stats Section Spacing */
+.impact-stats-section {
+padding: 5rem 2rem !important;
+margin-bottom: 4rem !important;
+}
+
+/* Volunteer Form Section Spacing */
+.volunteer-form-section {
+padding: 5rem 2rem !important;
+margin-bottom: 3rem !important;
+}
+
+/* Grid Gap Between Image and Form */
+.form-wrapper-grid {
+gap: 3rem !important;
+}
+
+/* Space Between Form Elements */
+.volunteer-form .form-group.floating-label {
+margin-bottom: 1.5rem !important;
+}
+
+/* Space Between Image and Benefits */
+.image-container {
+margin-bottom: 2rem !important;
+}
+
+/* Space Inside Benefits List */
+.volunteer-benefits li {
+padding: 1rem 0 !important;
+}
+
+/* Space Between Submit Button and Trust Badge */
+.submit-button {
+margin-top: 2rem !important;
+margin-bottom: 1.5rem !important;
+}
+
+.trust-badge {
+margin-top: 1.5rem !important;
+}
+
+/* Stats Cards Gap */
+.stats-grid {
+gap: 2.5rem !important;
+}
+
+/* Ways to Help Cards Gap */
+.ways-grid {
+gap: 2.5rem !important;
+}
+
+/* Section Headers Spacing */
+.section-header {
+margin-bottom: 3.5rem !important;
+}
+
+.section-header h2 {
+margin-bottom: 1rem !important;
+}
+
+.section-header p {
+margin-top: 0.75rem !important;
+}
+
+/* Form Header Spacing */
+.form-header {
+margin-bottom: 2.5rem !important;
+padding-bottom: 2rem !important;
+}
+
+.form-header h2 {
+margin-bottom: 1rem !important;
+}
+
+.form-header p {
+margin-top: 0.75rem !important;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+.get-involved-hero {
+margin-bottom: 3rem !important;
+}
+
+.ways-to-help-section {
+padding: 4rem 1.5rem !important;
+margin-bottom: 2rem !important;
+}
+
+.impact-stats-section {
+padding: 4rem 1.5rem !important;
+margin-bottom: 3rem !important;
+}
+
+.volunteer-form-section {
+padding: 4rem 1.5rem !important;
+margin-bottom: 2rem !important;
+}
+
+.form-wrapper-grid {
+gap: 2rem !important;
+}
+
+.stats-grid {
+gap: 1.5rem !important;
+}
+
+.ways-grid {
+gap: 2rem !important;
+}
+
+.section-header {
+margin-bottom: 2.5rem !important;
+}
+}
+
+@media (max-width: 480px) {
+.get-involved-hero {
+margin-bottom: 2rem !important;
+}
+
+.ways-to-help-section,
+.impact-stats-section,
+.volunteer-form-section {
+padding: 3rem 1rem !important;
+margin-bottom: 2rem !important;
+}
+
+.form-wrapper-grid {
+gap: 1.5rem !important;
+}
+
+.stats-grid,
+.ways-grid {
+gap: 1.5rem !important;
+}
+}

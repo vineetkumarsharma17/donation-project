@@ -1,12 +1,7 @@
 import React from 'react';
-import Header from './components/Header';
-import HeroSection from './components/HeroSection';
-import Footer from './components/Footer';
-import PageTransition from './components/PageTransition';
-import './App.css';
-
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
+import SinglePageHome from './pages/SinglePageHome';
 import AboutPage from './pages/AboutPage';
 import BlogPage from './pages/BlogPage';
 import EventsPage from './pages/EventsPage';
@@ -14,40 +9,63 @@ import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
 import DonatePage from './pages/DonatePage';
 import GetInvolvedPage from './pages/GetInvolvedPage';
-import NewGetInvolvedPage from './pages/NewGetInvolvedPage';
-
 import ProgramsSection from './components/ProgramsSection';
-
-function AnimatedRoutes() {
-    const location = useLocation();
-
-    return (
-        <AnimatePresence mode="wait">
-            <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<PageTransition><HeroSection /></PageTransition>} />
-                <Route path="/about" element={<PageTransition><AboutPage /></PageTransition>} />
-                <Route path="/programs" element={<PageTransition><ProgramsSection /></PageTransition>} />
-                <Route path="/blog" element={<PageTransition><BlogPage /></PageTransition>} />
-                <Route path="/events" element={<PageTransition><EventsPage /></PageTransition>} />
-                <Route path="/gallery" element={<PageTransition><GalleryPage /></PageTransition>} />
-                <Route path="/contact" element={<PageTransition><ContactPage /></PageTransition>} />
-                <Route path="/donate" element={<PageTransition><DonatePage /></PageTransition>} />
-                <Route path="/get-involved" element={<PageTransition><GetInvolvedPage /></PageTransition>} />
-                <Route path="/new-get-involved" element={<PageTransition><NewGetInvolvedPage /></PageTransition>} />
-            </Routes>
-        </AnimatePresence>
-    );
-}
+import PageTransition from './components/PageTransition';
+import PageLayout from './components/PageLayout';
+import './App.css';
 
 function App() {
     return (
         <Router>
             <div className="app">
-                <Header />
-                <main>
-                    <AnimatedRoutes />
-                </main>
-                <Footer />
+                <AnimatePresence mode="wait">
+                    <Routes>
+                        {/* Single Page Home with Scroll Navigation (has its own navbar) */}
+                        <Route path="/" element={<SinglePageHome />} />
+
+                        {/* Separate Pages (wrapped with PageLayout for navbar and footer) */}
+                        <Route path="/about" element={
+                            <PageLayout>
+                                <PageTransition><AboutPage /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/programs" element={
+                            <PageLayout>
+                                <PageTransition><ProgramsSection /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/blog" element={
+                            <PageLayout>
+                                <PageTransition><BlogPage /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/events" element={
+                            <PageLayout>
+                                <PageTransition><EventsPage /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/gallery" element={
+                            <PageLayout>
+                                <PageTransition><GalleryPage /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/contact" element={
+                            <PageLayout>
+                                <PageTransition><ContactPage /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/donate" element={
+                            <PageLayout>
+                                <PageTransition><DonatePage /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/get-involved" element={
+                            <PageLayout>
+                                <PageTransition><GetInvolvedPage /></PageTransition>
+                            </PageLayout>
+                        } />
+                    </Routes>
+                </AnimatePresence>
             </div>
         </Router>
     );

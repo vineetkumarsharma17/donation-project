@@ -1,0 +1,203 @@
+/* Hero CTA Card - Right Side */
+
+.hero-cta-card {
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 2rem;
+}
+
+.cta-card-content {
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(20px);
+-webkit-backdrop-filter: blur(20px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+border-radius: 24px;
+padding: 3rem 2.5rem;
+text-align: center;
+box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+max-width: 450px;
+}
+
+.cta-icon-wrapper {
+display: inline-block;
+margin-bottom: 1.5rem;
+}
+
+.cta-card-title {
+font-size: 2rem;
+font-weight: 800;
+color: white;
+margin-bottom: 1rem;
+line-height: 1.2;
+}
+
+.cta-card-description {
+font-size: 1.05rem;
+color: rgba(255, 255, 255, 0.9);
+margin-bottom: 2rem;
+line-height: 1.5;
+}
+
+/* Hero Donate Button */
+.hero-donate-btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 0.75rem;
+padding: 1.5rem 3.5rem;
+background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%);
+color: #1f2937;
+border: none;
+border-radius: 50px;
+font-size: 1.35rem;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+box-shadow:
+0 10px 30px rgba(250, 204, 21, 0.4),
+0 4px 15px rgba(245, 158, 11, 0.3),
+inset 0 -3px 0 rgba(0, 0, 0, 0.1);
+text-transform: uppercase;
+letter-spacing: 1px;
+margin-bottom: 1.5rem;
+position: relative;
+overflow: hidden;
+width: 100%;
+}
+
+.hero-donate-btn::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(
+90deg,
+transparent,
+rgba(255, 255, 255, 0.3),
+transparent
+);
+transition: left 0.6s ease;
+}
+
+.hero-donate-btn:hover::before {
+left: 100%;
+}
+
+/* Trust Badge */
+.cta-trust-badge {
+display: inline-flex;
+align-items: center;
+gap: 0.5rem;
+padding: 0.75rem 1.5rem;
+background: rgba(255, 255, 255, 0.15);
+backdrop-filter: blur(10px);
+border-radius: 50px;
+color: rgba(255, 255, 255, 0.95);
+font-size: 0.95rem;
+font-weight: 500;
+border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-trust-badge svg {
+color: #facc15;
+}
+
+/* Update existing CTA buttons */
+.hero-cta-buttons {
+display: flex;
+gap: 1rem;
+margin-top: 2rem;
+}
+
+.cta-secondary,
+.cta-tertiary {
+padding: 1rem 2rem;
+border-radius: 50px;
+font-size: 1rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+border: 2px solid rgba(255, 255, 255, 0.3);
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(10px);
+color: white;
+}
+
+.cta-secondary:hover,
+.cta-tertiary:hover {
+background: rgba(255, 255, 255, 0.2);
+border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+.hero-content-wrapper {
+grid-template-columns: 1fr;
+gap: 3rem;
+}
+
+.hero-cta-card {
+padding: 3rem 2rem;
+}
+
+.cta-card-title {
+font-size: 1.75rem;
+}
+
+.hero-donate-btn {
+width: 100%;
+max-width: 400px;
+}
+}
+
+@media (max-width: 768px) {
+.cta-card-content {
+padding: 2.5rem 2rem;
+}
+
+.cta-card-title {
+font-size: 1.5rem;
+}
+
+.cta-card-description {
+font-size: 1rem;
+}
+
+.hero-donate-btn {
+padding: 1.25rem 2.5rem;
+font-size: 1.15rem;
+width: 100%;
+}
+
+.hero-cta-buttons {
+flex-direction: column;
+}
+
+.cta-secondary,
+.cta-tertiary {
+width: 100%;
+}
+}
+
+@media (max-width: 480px) {
+.cta-card-content {
+padding: 2rem 1.5rem;
+}
+
+.cta-card-title {
+font-size: 1.35rem;
+}
+
+.hero-donate-btn {
+padding: 1.1rem 2rem;
+font-size: 1rem;
+}
+
+.cta-trust-badge {
+font-size: 0.85rem;
+padding: 0.65rem 1.25rem;
+}
+}

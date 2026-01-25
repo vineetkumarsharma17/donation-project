@@ -1,0 +1,141 @@
+/* Submit Button - Yellow/Golden Theme with Amazing Hover Effects */
+
+.volunteer-form .submit-button {
+width: 100% !important;
+padding: 1.35rem 2.5rem !important;
+background: linear-gradient(135deg, #facc15 0%, #f59e0b 100%) !important;
+color: #1f2937 !important;
+border: none !important;
+border-radius: 14px !important;
+font-size: 1.15rem !important;
+font-weight: 700 !important;
+cursor: pointer !important;
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+box-shadow:
+0 4px 20px rgba(245, 158, 11, 0.4),
+0 2px 10px rgba(250, 204, 21, 0.3),
+inset 0 -2px 0 rgba(0, 0, 0, 0.1) !important;
+margin-top: 2rem !important;
+margin-bottom: 1.5rem !important;
+display: flex !important;
+align-items: center !important;
+justify-content: center !important;
+gap: 0.75rem !important;
+position: relative !important;
+overflow: hidden !important;
+text-transform: uppercase !important;
+letter-spacing: 0.5px !important;
+}
+
+/* Shine Effect */
+.volunteer-form .submit-button::before {
+content: '' !important;
+position: absolute !important;
+top: 0 !important;
+left: -100% !important;
+width: 100% !important;
+height: 100% !important;
+background: linear-gradient(
+90deg,
+transparent,
+rgba(255, 255, 255, 0.4),
+transparent
+) !important;
+transition: left 0.6s ease !important;
+}
+
+.volunteer-form .submit-button:hover::before {
+left: 100% !important;
+}
+
+/* Hover State - Lift & Glow */
+.volunteer-form .submit-button:hover {
+transform: translateY(-4px) scale(1.02) !important;
+background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%) !important;
+box-shadow:
+0 8px 30px rgba(245, 158, 11, 0.5),
+0 4px 15px rgba(250, 204, 21, 0.4),
+0 0 40px rgba(250, 204, 21, 0.3),
+inset 0 -2px 0 rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Active/Click State */
+.volunteer-form .submit-button:active {
+transform: translateY(-1px) scale(0.98) !important;
+box-shadow:
+0 4px 15px rgba(245, 158, 11, 0.4),
+0 2px 8px rgba(250, 204, 21, 0.3),
+inset 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Disabled/Submitting State */
+.volunteer-form .submit-button:disabled,
+.volunteer-form .submit-button.submitting {
+background: linear-gradient(135deg, #d1d5db, #9ca3af) !important;
+color: #6b7280 !important;
+cursor: not-allowed !important;
+transform: none !important;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Button Arrow Animation */
+.volunteer-form .submit-button .button-arrow {
+font-size: 1.5rem !important;
+font-weight: 400 !important;
+transition: transform 0.3s ease !important;
+}
+
+.volunteer-form .submit-button:hover .button-arrow {
+transform: translateX(5px) !important;
+}
+
+/* Pulse Animation on Hover */
+@keyframes pulse-glow {
+0%, 100% {
+box-shadow:
+0 8px 30px rgba(245, 158, 11, 0.5),
+0 4px 15px rgba(250, 204, 21, 0.4),
+0 0 40px rgba(250, 204, 21, 0.3);
+}
+50% {
+box-shadow:
+0 8px 35px rgba(245, 158, 11, 0.6),
+0 4px 20px rgba(250, 204, 21, 0.5),
+0 0 50px rgba(250, 204, 21, 0.4);
+}
+}
+
+.volunteer-form .submit-button:hover {
+animation: pulse-glow 2s ease-in-out infinite !important;
+}
+
+/* Loading Spinner - Yellow Theme */
+.loading-spinner .spinner-circle {
+border: 3px solid rgba(31, 41, 55, 0.2) !important;
+border-top-color: #1f2937 !important;
+}
+
+/* Trust Badge - Match Yellow Theme */
+.trust-badge {
+background: linear-gradient(135deg, #fef3c7, #fde68a) !important;
+border: 1px solid #fcd34d !important;
+}
+
+.trust-badge p {
+color: #92400e !important;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+.volunteer-form .submit-button {
+padding: 1.2rem 2rem !important;
+font-size: 1.05rem !important;
+}
+}
+
+@media (max-width: 480px) {
+.volunteer-form .submit-button {
+padding: 1.1rem 1.5rem !important;
+font-size: 1rem !important;
+}
+}

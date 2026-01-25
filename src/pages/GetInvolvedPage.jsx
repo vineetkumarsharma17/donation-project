@@ -5,6 +5,11 @@ import { BookHeart, Users, Handshake, Share2, CheckCircle, TrendingUp, Heart, Bo
 import GetInvolvedCard from '../components/GetInvolvedCard';
 import { useCountUp } from '../hooks/useCountUp';
 import './GetInvolvedPage.css';
+import './GetInvolvedPageFix.css';
+import './StatsRowFix.css';
+import './FormEnhanced.css';
+import './SectionSpacing.css';
+import './YellowButton.css';
 
 const GetInvolvedPage = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -14,11 +19,9 @@ const GetInvolvedPage = () => {
 
     const formRef = useRef(null);
     const statsRef = useRef(null);
-    const ctaRef = useRef(null);
 
     const isFormInView = useInView(formRef, { once: true, margin: "-100px" });
     const isStatsInView = useInView(statsRef, { once: true, margin: "-100px" });
-    const isCtaInView = useInView(ctaRef, { once: true, margin: "-100px" });
 
     // Count-up animations for impact stats
     const booksCount = useCountUp(50000, 2500, statsRef);
@@ -282,319 +285,338 @@ const GetInvolvedPage = () => {
                 </div>
             </section>
 
-            {/* Volunteer Sign-Up Form */}
+            {/* Volunteer Sign-Up Form with Image */}
             <section className="volunteer-form-section" id="volunteer-form" ref={formRef}>
                 <motion.div
-                    className="form-container"
-                    initial={{ opacity: 0, scale: 0.95, y: 50 }}
-                    animate={isFormInView ? { opacity: 1, scale: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, type: "spring", stiffness: 100 }}
+                    className="form-wrapper-grid"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={isFormInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.8 }}
                 >
-                    <div className="form-header">
-                        <motion.div
-                            className="form-icon"
-                            initial={{ scale: 0, rotate: -180 }}
-                            animate={isFormInView ? { scale: 1, rotate: 0 } : {}}
-                            transition={{ duration: 0.6, delay: 0.2, type: "spring" }}
-                        >
-                            <Heart size={48} />
-                        </motion.div>
-                        <h2>Join Our Volunteer Team</h2>
-                        <p>Be part of something meaningful. Together, we can change lives through literacy.</p>
-                    </div>
-
-                    {!isSuccess ? (
-                        <form onSubmit={handleSubmit(onSubmit)} className="volunteer-form">
-                            {/* Name Field with Floating Label */}
-                            <motion.div
-                                className={`form-group floating-label ${errors.name ? 'has-error' : ''}`}
-                                initial={{ opacity: 0, x: -30 }}
-                                animate={isFormInView ? { opacity: 1, x: 0 } : {}}
-                                transition={{ duration: 0.5, delay: 0.1 }}
-                            >
-                                <input
-                                    type="text"
-                                    id="name"
-                                    {...register("name", {
-                                        required: "Name is required",
-                                        minLength: { value: 2, message: "Name must be at least 2 characters" }
-                                    })}
-                                    className={errors.name ? 'error' : ''}
-                                    placeholder=" "
-                                />
-                                <label htmlFor="name">Full Name *</label>
-                                {errors.name && (
-                                    <motion.span
-                                        className="error-message"
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                    >
-                                        ⚠️ {errors.name.message}
-                                    </motion.span>
-                                )}
-                            </motion.div>
-
-                            {/* Email Field with Floating Label */}
-                            <motion.div
-                                className={`form-group floating-label ${errors.email ? 'has-error' : ''}`}
-                                initial={{ opacity: 0, x: -30 }}
-                                animate={isFormInView ? { opacity: 1, x: 0 } : {}}
-                                transition={{ duration: 0.5, delay: 0.2 }}
-                            >
-                                <input
-                                    type="email"
-                                    id="email"
-                                    {...register("email", {
-                                        required: "Email is required",
-                                        pattern: {
-                                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                            message: "Invalid email address"
-                                        }
-                                    })}
-                                    className={errors.email ? 'error' : ''}
-                                    placeholder=" "
-                                />
-                                <label htmlFor="email">Email Address *</label>
-                                {errors.email && (
-                                    <motion.span
-                                        className="error-message"
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                    >
-                                        ⚠️ {errors.email.message}
-                                    </motion.span>
-                                )}
-                            </motion.div>
-
-                            {/* Phone Field with Floating Label */}
-                            <motion.div
-                                className={`form-group floating-label ${errors.phone ? 'has-error' : ''}`}
-                                initial={{ opacity: 0, x: -30 }}
-                                animate={isFormInView ? { opacity: 1, x: 0 } : {}}
-                                transition={{ duration: 0.5, delay: 0.3 }}
-                            >
-                                <input
-                                    type="tel"
-                                    id="phone"
-                                    {...register("phone", {
-                                        required: "Phone number is required",
-                                        pattern: {
-                                            value: /^[0-9+\-\s()]+$/,
-                                            message: "Invalid phone number"
-                                        }
-                                    })}
-                                    className={errors.phone ? 'error' : ''}
-                                    placeholder=" "
-                                />
-                                <label htmlFor="phone">Phone Number *</label>
-                                {errors.phone && (
-                                    <motion.span
-                                        className="error-message"
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                    >
-                                        ⚠️ {errors.phone.message}
-                                    </motion.span>
-                                )}
-                            </motion.div>
-
-                            {/* Availability Field with Floating Label */}
-                            <motion.div
-                                className={`form-group floating-label ${errors.availability ? 'has-error' : ''}`}
-                                initial={{ opacity: 0, x: -30 }}
-                                animate={isFormInView ? { opacity: 1, x: 0 } : {}}
-                                transition={{ duration: 0.5, delay: 0.4 }}
-                            >
-                                <select
-                                    id="availability"
-                                    {...register("availability", { required: "Please select your availability" })}
-                                    className={errors.availability ? 'error' : ''}
+                    {/* Left Side - Image */}
+                    <motion.div
+                        className="form-image-side"
+                        initial={{ opacity: 0, x: -50 }}
+                        animate={isFormInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.8, delay: 0.2 }}
+                    >
+                        <div className="image-container">
+                            <img
+                                src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=800&q=80"
+                                alt="Volunteers helping children with books"
+                            />
+                            <div className="image-overlay-content">
+                                <motion.div
+                                    className="overlay-stat-box"
+                                    initial={{ scale: 0 }}
+                                    animate={isFormInView ? { scale: 1 } : {}}
+                                    transition={{ delay: 0.6, type: "spring" }}
                                 >
-                                    <option value=""></option>
-                                    <option value="weekdays">Weekdays</option>
-                                    <option value="weekends">Weekends</option>
-                                    <option value="flexible">Flexible</option>
-                                </select>
-                                <label htmlFor="availability">Availability *</label>
-                                {errors.availability && (
-                                    <motion.span
-                                        className="error-message"
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                    >
-                                        ⚠️ {errors.availability.message}
-                                    </motion.span>
-                                )}
-                            </motion.div>
+                                    <Heart size={32} />
+                                    <h3>1,200+</h3>
+                                    <p>Active Volunteers</p>
+                                </motion.div>
+                            </div>
+                        </div>
+                        <div className="volunteer-benefits">
+                            <h3>Why Volunteer With Us?</h3>
+                            <ul>
+                                <li>
+                                    <span className="benefit-icon">✨</span>
+                                    <span>Make a real impact in children's lives</span>
+                                </li>
+                                <li>
+                                    <span className="benefit-icon">🤝</span>
+                                    <span>Join a passionate community</span>
+                                </li>
+                                <li>
+                                    <span className="benefit-icon">📚</span>
+                                    <span>Flexible volunteering opportunities</span>
+                                </li>
+                                <li>
+                                    <span className="benefit-icon">🎯</span>
+                                    <span>Develop new skills and experience</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </motion.div>
 
-                            {/* Message Field with Floating Label */}
+                    {/* Right Side - Form */}
+                    <motion.div
+                        className="form-container"
+                        initial={{ opacity: 0, x: 50 }}
+                        animate={isFormInView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.8, delay: 0.3 }}
+                    >
+                        <div className="form-header">
                             <motion.div
-                                className={`form-group floating-label ${errors.message ? 'has-error' : ''}`}
-                                initial={{ opacity: 0, x: -30 }}
-                                animate={isFormInView ? { opacity: 1, x: 0 } : {}}
-                                transition={{ duration: 0.5, delay: 0.5 }}
-                            >
-                                <textarea
-                                    id="message"
-                                    rows="4"
-                                    {...register("message", {
-                                        required: "Please tell us why you want to volunteer",
-                                        minLength: { value: 20, message: "Please provide at least 20 characters" }
-                                    })}
-                                    className={errors.message ? 'error' : ''}
-                                    placeholder=" "
-                                ></textarea>
-                                <label htmlFor="message">Why do you want to volunteer with us?</label>
-                                {errors.message && (
-                                    <motion.span
-                                        className="error-message"
-                                        initial={{ opacity: 0, x: -10 }}
-                                        animate={{ opacity: 1, x: 0 }}
-                                    >
-                                        ⚠️ {errors.message.message}
-                                    </motion.span>
-                                )}
-                            </motion.div>
-
-                            {/* Submit Button with Enhanced Animation */}
-                            <motion.button
-                                type="submit"
-                                className={`submit-button ${isSubmitting ? 'submitting' : ''}`}
-                                disabled={isSubmitting}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={isFormInView ? { opacity: 1, y: 0 } : {}}
-                                transition={{ duration: 0.5, delay: 0.6 }}
-                                whileHover={!isSubmitting ? {
-                                    scale: 1.02,
-                                    y: -4,
-                                    boxShadow: "0 12px 40px rgba(74, 124, 44, 0.4)"
-                                } : {}}
-                                whileTap={!isSubmitting ? { scale: 0.98 } : {}}
-                            >
-                                {isSubmitting ? (
-                                    <motion.div
-                                        className="loading-spinner"
-                                        animate={{ rotate: 360 }}
-                                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                    >
-                                        <div className="spinner-circle"></div>
-                                    </motion.div>
-                                ) : (
-                                    <>
-                                        <span>Join Our Team</span>
-                                        <motion.span
-                                            className="button-arrow"
-                                            animate={{ x: [0, 5, 0] }}
-                                            transition={{ duration: 1.5, repeat: Infinity }}
-                                        >
-                                            →
-                                        </motion.span>
-                                    </>
-                                )}
-                            </motion.button>
-
-                            {/* Trust Badge */}
-                            <motion.div
-                                className="trust-badge"
-                                initial={{ opacity: 0 }}
-                                animate={isFormInView ? { opacity: 1 } : {}}
-                                transition={{ duration: 0.5, delay: 0.8 }}
-                            >
-                                <span className="lock-icon">🔒</span>
-                                <p>Your data is safe with us. We respect your privacy and will never share your information.</p>
-                            </motion.div>
-                        </form>
-                    ) : (
-                        <motion.div
-                            className="success-message"
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.5 }}
-                        >
-                            <motion.div
-                                className="success-icon"
+                                className="form-icon"
                                 initial={{ scale: 0, rotate: -180 }}
-                                animate={{ scale: 1, rotate: 0 }}
-                                transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 10 }}
+                                animate={isFormInView ? { scale: 1, rotate: 0 } : {}}
+                                transition={{ duration: 0.6, delay: 0.4, type: "spring" }}
+                            >
+                                <Heart size={48} />
+                            </motion.div>
+                            <h2>Join Our Volunteer Team</h2>
+                            <p>Be part of something meaningful. Together, we can change lives through literacy.</p>
+                        </div>
+
+                        {!isSuccess ? (
+                            <form onSubmit={handleSubmit(onSubmit)} className="volunteer-form">
+                                {/* Name Field with Floating Label */}
+                                <motion.div
+                                    className={`form-group floating-label ${errors.name ? 'has-error' : ''}`}
+                                    initial={{ opacity: 0, x: -30 }}
+                                    animate={isFormInView ? { opacity: 1, x: 0 } : {}}
+                                    transition={{ duration: 0.5, delay: 0.5 }}
+                                >
+                                    <input
+                                        type="text"
+                                        id="name"
+                                        {...register("name", {
+                                            required: "Name is required",
+                                            minLength: { value: 2, message: "Name must be at least 2 characters" }
+                                        })}
+                                        className={errors.name ? 'error' : ''}
+                                        placeholder=" "
+                                    />
+                                    <label htmlFor="name">Full Name *</label>
+                                    {errors.name && (
+                                        <motion.span
+                                            className="error-message"
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                        >
+                                            ⚠️ {errors.name.message}
+                                        </motion.span>
+                                    )}
+                                </motion.div>
+
+                                {/* Email Field with Floating Label */}
+                                <motion.div
+                                    className={`form-group floating-label ${errors.email ? 'has-error' : ''}`}
+                                    initial={{ opacity: 0, x: -30 }}
+                                    animate={isFormInView ? { opacity: 1, x: 0 } : {}}
+                                    transition={{ duration: 0.5, delay: 0.6 }}
+                                >
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        {...register("email", {
+                                            required: "Email is required",
+                                            pattern: {
+                                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                                message: "Invalid email address"
+                                            }
+                                        })}
+                                        className={errors.email ? 'error' : ''}
+                                        placeholder=" "
+                                    />
+                                    <label htmlFor="email">Email Address *</label>
+                                    {errors.email && (
+                                        <motion.span
+                                            className="error-message"
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                        >
+                                            ⚠️ {errors.email.message}
+                                        </motion.span>
+                                    )}
+                                </motion.div>
+
+                                {/* Phone Field with Floating Label */}
+                                <motion.div
+                                    className={`form-group floating-label ${errors.phone ? 'has-error' : ''}`}
+                                    initial={{ opacity: 0, x: -30 }}
+                                    animate={isFormInView ? { opacity: 1, x: 0 } : {}}
+                                    transition={{ duration: 0.5, delay: 0.7 }}
+                                >
+                                    <input
+                                        type="tel"
+                                        id="phone"
+                                        {...register("phone", {
+                                            required: "Phone number is required",
+                                            pattern: {
+                                                value: /^[0-9+\-\s()]+$/,
+                                                message: "Invalid phone number"
+                                            }
+                                        })}
+                                        className={errors.phone ? 'error' : ''}
+                                        placeholder=" "
+                                    />
+                                    <label htmlFor="phone">Phone Number *</label>
+                                    {errors.phone && (
+                                        <motion.span
+                                            className="error-message"
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                        >
+                                            ⚠️ {errors.phone.message}
+                                        </motion.span>
+                                    )}
+                                </motion.div>
+
+                                {/* Availability Field with Floating Label */}
+                                <motion.div
+                                    className={`form-group floating-label ${errors.availability ? 'has-error' : ''}`}
+                                    initial={{ opacity: 0, x: -30 }}
+                                    animate={isFormInView ? { opacity: 1, x: 0 } : {}}
+                                    transition={{ duration: 0.5, delay: 0.8 }}
+                                >
+                                    <select
+                                        id="availability"
+                                        {...register("availability", { required: "Please select your availability" })}
+                                        className={errors.availability ? 'error' : ''}
+                                    >
+                                        <option value=""></option>
+                                        <option value="weekdays">Weekdays</option>
+                                        <option value="weekends">Weekends</option>
+                                        <option value="flexible">Flexible</option>
+                                    </select>
+                                    <label htmlFor="availability">Availability *</label>
+                                    {errors.availability && (
+                                        <motion.span
+                                            className="error-message"
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                        >
+                                            ⚠️ {errors.availability.message}
+                                        </motion.span>
+                                    )}
+                                </motion.div>
+
+                                {/* Message Field with Floating Label */}
+                                <motion.div
+                                    className={`form-group floating-label ${errors.message ? 'has-error' : ''}`}
+                                    initial={{ opacity: 0, x: -30 }}
+                                    animate={isFormInView ? { opacity: 1, x: 0 } : {}}
+                                    transition={{ duration: 0.5, delay: 0.9 }}
+                                >
+                                    <textarea
+                                        id="message"
+                                        rows="4"
+                                        {...register("message", {
+                                            required: "Please tell us why you want to volunteer",
+                                            minLength: { value: 20, message: "Please provide at least 20 characters" }
+                                        })}
+                                        className={errors.message ? 'error' : ''}
+                                        placeholder=" "
+                                    ></textarea>
+                                    <label htmlFor="message">Why do you want to volunteer with us?</label>
+                                    {errors.message && (
+                                        <motion.span
+                                            className="error-message"
+                                            initial={{ opacity: 0, x: -10 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                        >
+                                            ⚠️ {errors.message.message}
+                                        </motion.span>
+                                    )}
+                                </motion.div>
+
+                                {/* Submit Button with Enhanced Animation */}
+                                <motion.button
+                                    type="submit"
+                                    className={`submit-button ${isSubmitting ? 'submitting' : ''}`}
+                                    disabled={isSubmitting}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={isFormInView ? { opacity: 1, y: 0 } : {}}
+                                    transition={{ duration: 0.5, delay: 1 }}
+                                    whileHover={!isSubmitting ? {
+                                        scale: 1.02,
+                                        y: -4,
+                                        boxShadow: "0 12px 40px rgba(74, 124, 44, 0.4)"
+                                    } : {}}
+                                    whileTap={!isSubmitting ? { scale: 0.98 } : {}}
+                                >
+                                    {isSubmitting ? (
+                                        <motion.div
+                                            className="loading-spinner"
+                                            animate={{ rotate: 360 }}
+                                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                        >
+                                            <div className="spinner-circle"></div>
+                                        </motion.div>
+                                    ) : (
+                                        <>
+                                            <span>Join Our Team</span>
+                                            <motion.span
+                                                className="button-arrow"
+                                                animate={{ x: [0, 5, 0] }}
+                                                transition={{ duration: 1.5, repeat: Infinity }}
+                                            >
+                                                →
+                                            </motion.span>
+                                        </>
+                                    )}
+                                </motion.button>
+
+                                {/* Trust Badge */}
+                                <motion.div
+                                    className="trust-badge"
+                                    initial={{ opacity: 0 }}
+                                    animate={isFormInView ? { opacity: 1 } : {}}
+                                    transition={{ duration: 0.5, delay: 1.2 }}
+                                >
+                                    <span className="lock-icon">🔒</span>
+                                    <p>Your data is safe with us. We respect your privacy and will never share your information.</p>
+                                </motion.div>
+                            </form>
+                        ) : (
+                            <motion.div
+                                className="success-message"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.5 }}
                             >
                                 <motion.div
-                                    animate={{
-                                        scale: [1, 1.2, 1],
-                                    }}
-                                    transition={{
-                                        duration: 0.6,
-                                        delay: 0.5,
-                                        times: [0, 0.5, 1]
-                                    }}
+                                    className="success-icon"
+                                    initial={{ scale: 0, rotate: -180 }}
+                                    animate={{ scale: 1, rotate: 0 }}
+                                    transition={{ delay: 0.2, type: "spring", stiffness: 200, damping: 10 }}
                                 >
-                                    <CheckCircle size={100} strokeWidth={2.5} />
+                                    <motion.div
+                                        animate={{
+                                            scale: [1, 1.2, 1],
+                                        }}
+                                        transition={{
+                                            duration: 0.6,
+                                            delay: 0.5,
+                                            times: [0, 0.5, 1]
+                                        }}
+                                    >
+                                        <CheckCircle size={100} strokeWidth={2.5} />
+                                    </motion.div>
+                                </motion.div>
+                                <motion.h3
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.4 }}
+                                >
+                                    Welcome to the Team! 🎉
+                                </motion.h3>
+                                <motion.p
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.6 }}
+                                >
+                                    Thank you for joining us! We'll contact you within 48 hours with next steps.
+                                </motion.p>
+                                <motion.div
+                                    className="success-confetti"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    <span>🎊</span>
+                                    <span>✨</span>
+                                    <span>🌟</span>
+                                    <span>💚</span>
+                                    <span>📚</span>
                                 </motion.div>
                             </motion.div>
-                            <motion.h3
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.4 }}
-                            >
-                                Welcome to the Team! 🎉
-                            </motion.h3>
-                            <motion.p
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: 0.6 }}
-                            >
-                                Thank you for joining us! We'll contact you within 48 hours with next steps.
-                            </motion.p>
-                            <motion.div
-                                className="success-confetti"
-                                initial={{ opacity: 0 }}
-                                animate={{ opacity: 1 }}
-                                transition={{ delay: 0.3 }}
-                            >
-                                <span>🎊</span>
-                                <span>✨</span>
-                                <span>🌟</span>
-                                <span>💚</span>
-                                <span>📚</span>
-                            </motion.div>
-                        </motion.div>
-                    )}
-                </motion.div>
-            </section>
-
-            {/* Emotional CTA Section */}
-            <section className="get-involved-cta" ref={ctaRef}>
-                <div className="cta-waves"></div>
-                <motion.div
-                    className="cta-content"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isCtaInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.6 }}
-                >
-                    <h2>Every Action Counts</h2>
-                    <p>Whether you donate a book, volunteer an hour, or share our mission—you're changing lives.</p>
-                    <div className="cta-buttons">
-                        <motion.button
-                            className="cta-btn-primary"
-                            whileHover={{ scale: 1.05, y: -3 }}
-                            whileTap={{ scale: 0.95 }}
-                            animate={{
-                                boxShadow: [
-                                    "0 0 0 0 rgba(250, 204, 21, 0.4)",
-                                    "0 0 0 20px rgba(250, 204, 21, 0)",
-                                ]
-                            }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                        >
-                            Donate Books Now
-                        </motion.button>
-                        <motion.button
-                            className="cta-btn-secondary"
-                            whileHover={{ scale: 1.05, y: -3 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            View Our Programs
-                        </motion.button>
-                    </div>
+                        )}
+                    </motion.div>
                 </motion.div>
             </section>
         </div>

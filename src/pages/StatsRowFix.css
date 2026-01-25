@@ -1,0 +1,44 @@
+/* Stats Grid - Force Row Layout */
+.impact-stats-section .stats-grid {
+max-width: 1400px !important;
+margin: 0 auto !important;
+display: grid !important;
+grid-template-columns: repeat(4, 1fr) !important;
+gap: 2rem !important;
+}
+
+/* Responsive - Keep row on tablet */
+@media (max-width: 1024px) {
+.impact-stats-section .stats-grid {
+grid-template-columns: repeat(4, 1fr) !important;
+gap: 1.5rem !important;
+}
+
+.stat-card {
+padding: 2rem 1rem !important;
+}
+
+.stat-card h3 {
+font-size: 2.5rem !important;
+}
+
+.stat-card p {
+font-size: 0.9rem !important;
+}
+}
+
+/* Mobile - Stack in 2x2 grid */
+@media (max-width: 768px) {
+.impact-stats-section .stats-grid {
+grid-template-columns: repeat(2, 1fr) !important;
+gap: 1.5rem !important;
+}
+}
+
+/* Small mobile - Single column */
+@media (max-width: 480px) {
+.impact-stats-section .stats-grid {
+grid-template-columns: 1fr !important;
+gap: 1rem !important;
+}
+}
