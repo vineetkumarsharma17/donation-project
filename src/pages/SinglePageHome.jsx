@@ -9,7 +9,7 @@ import EventsSectionScroll from '../components/EventsSectionScroll';
 import GallerySectionScroll from '../components/GallerySectionScroll';
 import ContactSectionScroll from '../components/ContactSectionScroll';
 import GetInvolvedSectionScroll from '../components/GetInvolvedSectionScroll';
-import Footer from '../components/Footer';
+import FooterNew from '../components/FooterNew';
 import MobileStickyDonateBar from '../components/MobileStickyDonateBar';
 import './SinglePageHome.css';
 
@@ -55,7 +55,7 @@ const SinglePageHome = () => {
             </main>
 
             {/* Footer */}
-            <Footer />
+            <FooterNew />
 
             {/* Mobile Sticky Donate Bar */}
             <MobileStickyDonateBar />

@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './AboutPageStyles.css';
 
 const AboutPage = () => {
@@ -32,9 +33,9 @@ const AboutPage = () => {
                             Our holistic approach encompasses not just providing educational resources, but also fostering community engagement, teacher training, infrastructure development, and sustainable support systems that create lasting change.
                         </p>
 
-                        <button className="join-btn">
+                        <Link to="/get-involved" className="join-btn">
                             <span className="icon">👍</span> Join Our Mission
-                        </button>
+                        </Link>
                     </div>
 
                     <div className="image-column">

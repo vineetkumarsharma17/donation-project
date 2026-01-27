@@ -1,6 +1,6 @@
 import React from 'react';
 import HybridNavbar from '../components/HybridNavbar';
-import Footer from '../components/Footer';
+import FooterNew from '../components/FooterNew';
 
 const PageLayout = ({ children }) => {
     return (
@@ -9,7 +9,7 @@ const PageLayout = ({ children }) => {
             <main style={{ paddingTop: '80px' }}>
                 {children}
             </main>
-            <Footer />
+            <FooterNew />
         </>
     );
 };

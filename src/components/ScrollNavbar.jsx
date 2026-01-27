@@ -45,13 +45,14 @@ const ScrollNavbar = () => {
       <div className="navbar-container">
         {/* Logo */}
         <div className="navbar-logo">
-          <motion.h1
+          <motion.img
+            src="/logo.png"
+            alt="Shailendrakumar Ajay - Helping Children, Changing Lives"
+            className="navbar-logo-image"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-          >
-            BookHope NGO
-          </motion.h1>
+          />
         </div>
 
         {/* Desktop Menu */}
@@ -72,7 +73,7 @@ const ScrollNavbar = () => {
               {item.label}
             </Link>
           ))}
-          
+
           {/* Animated Underline */}
           <motion.div
             className="nav-underline"

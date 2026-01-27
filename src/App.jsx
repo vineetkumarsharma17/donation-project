@@ -9,6 +9,9 @@ import GalleryPage from './pages/GalleryPage';
 import ContactPage from './pages/ContactPage';
 import DonatePage from './pages/DonatePage';
 import GetInvolvedPage from './pages/GetInvolvedPage';
+import PrivacyPage from './pages/PrivacyPage';
+import TermsPage from './pages/TermsPage';
+import CookiesPage from './pages/CookiesPage';
 import ProgramsSection from './components/ProgramsSection';
 import PageTransition from './components/PageTransition';
 import PageLayout from './components/PageLayout';
@@ -62,6 +65,23 @@ function App() {
                         <Route path="/get-involved" element={
                             <PageLayout>
                                 <PageTransition><GetInvolvedPage /></PageTransition>
+                            </PageLayout>
+                        } />
+
+                        {/* Legal Pages */}
+                        <Route path="/privacy" element={
+                            <PageLayout>
+                                <PageTransition><PrivacyPage /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/terms" element={
+                            <PageLayout>
+                                <PageTransition><TermsPage /></PageTransition>
+                            </PageLayout>
+                        } />
+                        <Route path="/cookies" element={
+                            <PageLayout>
+                                <PageTransition><CookiesPage /></PageTransition>
                             </PageLayout>
                         } />
                     </Routes>

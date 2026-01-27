@@ -20,13 +20,20 @@ padding: 1rem 2rem;
 gap: 2rem;
 }
 
-.navbar-logo h1 {
-font-size: 1.5rem;
-font-weight: 700;
-color: #ffd700;
-margin: 0;
+.navbar-logo {
+display: flex;
+align-items: center;
+}
+
+.navbar-logo-image {
+height: 60px;
+width: auto;
 cursor: pointer;
-letter-spacing: -0.5px;
+transition: transform 0.3s ease;
+}
+
+.navbar-logo-image:hover {
+transform: scale(1.05);
 }
 
 /* Desktop Menu */
@@ -208,8 +215,8 @@ display: none;
 display: block;
 }
 
-.navbar-logo h1 {
-font-size: 1.25rem;
+.navbar-logo-image {
+height: 50px;
 }
 }
 
@@ -220,6 +227,10 @@ padding: 0.75rem 1rem;
 
 .navbar-logo h1 {
 font-size: 1.1rem;
+}
+
+.navbar-logo-image {
+height: 45px;
 }
 
 .mobile-menu-panel {
