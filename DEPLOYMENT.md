@@ -10,7 +10,7 @@
 
 ### Steps:
 
-1. **Vercel पर जाएं**: https://vercel.com
+1. **Vercel पर जाएं**: https://ercel.com
 2. **GitHub से Sign up करें**
 3. **Import Project** पर क्लिक करें
 4. अपना GitHub repository select करें
