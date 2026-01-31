@@ -112,7 +112,7 @@ const DonationModal = ({ isOpen, onClose }) => {
                 key: 'rzp_test_YOUR_KEY_HERE', // Replace with your Razorpay key
                 amount: amount * 100, // Amount in paise
                 currency: 'INR',
-                name: 'BookHope NGO',
+                name: 'SHAILENDRA KUMAR AJAY FOUNDATION',
                 description: `${donationType === 'monthly' ? 'Monthly' : 'One-time'} Donation`,
                 image: '/logo.png', // Your NGO logo
                 handler: function (response) {

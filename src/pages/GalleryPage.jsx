@@ -128,7 +128,7 @@ const GalleryPage = () => {
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
                     <h1 className="gallery-hero-title">Moments of Impact</h1>
-                    <p className="gallery-hero-subtitle">
+                    <p className="gallery-hero-subtitle text-white">
                         Witness the joy of reading and the power of community through our journey of spreading literacy.
                     </p>
                 </motion.div>

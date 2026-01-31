@@ -52,7 +52,7 @@ const ContactSectionScroll = () => {
                                 </div>
                                 <div>
                                     <h4>Email</h4>
-                                    <p>info@bookhope.org</p>
+                                    <p>shailksingh6387@gmail.com</p>
                                 </div>
                             </div>
 
@@ -62,7 +62,7 @@ const ContactSectionScroll = () => {
                                 </div>
                                 <div>
                                     <h4>Phone</h4>
-                                    <p>+91 98765 43210</p>
+                                    <p>+91 63873 45451</p>
                                 </div>
                             </div>
 
@@ -72,7 +72,7 @@ const ContactSectionScroll = () => {
                                 </div>
                                 <div>
                                     <h4>Address</h4>
-                                    <p>123 Education Street, Delhi, India</p>
+                                    <p>Hardoi 241404, UP</p>
                                 </div>
                             </div>
                         </div>

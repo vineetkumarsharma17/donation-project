@@ -62,7 +62,9 @@ const ProgramsSection = () => {
                     maxWidth: '700px',
                     margin: '0 auto',
                     lineHeight: '1.6',
-                    opacity: '0.95'
+                    opacity: '0.95',
+                    color: 'white'
+
                 }}>
                     Explore how we are making a difference through our focused initiatives in education and literacy.
                 </p>

@@ -71,7 +71,7 @@ const DonatePage = () => {
                 key: 'rzp_test_YOUR_KEY_HERE',
                 amount: amount * 100,
                 currency: 'INR',
-                name: 'BookHope NGO',
+                name: 'SHAILENDRA KUMAR AJAY FOUNDATION',
                 description: `${donationType === 'monthly' ? 'Monthly' : 'One-time'} Donation`,
                 image: '/logo.png',
                 handler: function (response) {

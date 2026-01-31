@@ -1,16 +1,16 @@
 import React from 'react';
-import HybridNavbar from '../components/HybridNavbar';
-import FooterNew from '../components/FooterNew';
+import HybridNavbar from './HybridNavbar';
+import FooterNew from './FooterNew';
 
 const PageLayout = ({ children }) => {
     return (
-        <>
+        <div className="flex flex-col min-h-screen bg-background-light text-text">
             <HybridNavbar />
-            <main style={{ paddingTop: '80px' }}>
+            <main className="flex-grow pt-24"> {/* Increased padding for better spacing */}
                 {children}
             </main>
             <FooterNew />
-        </>
+        </div>
     );
 };
 

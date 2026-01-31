@@ -2,14 +2,23 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import './HybridNavbar.css';
 
 const HybridNavbar = () => {
     const [activeSection, setActiveSection] = useState('home');
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [underlineStyle, setUnderlineStyle] = useState({ width: 0, left: 0 });
+    const [scrolled, setScrolled] = useState(false);
     const navRef = useRef(null);
     const location = useLocation();
+
+    // Handle scroll effect
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     const menuItems = [
         { id: 'home', label: 'Home', path: '/' },
@@ -23,7 +32,6 @@ const HybridNavbar = () => {
     ];
 
     useEffect(() => {
-        // Update underline position when active section changes
         if (navRef.current && !isMobileMenuOpen) {
             const activeLink = navRef.current.querySelector(`[data-section="${activeSection}"]`);
             if (activeLink) {
@@ -33,7 +41,6 @@ const HybridNavbar = () => {
         }
     }, [activeSection, isMobileMenuOpen]);
 
-    // Update active section based on current route
     useEffect(() => {
         const currentPath = location.pathname;
         const currentItem = menuItems.find(item => item.path === currentPath);
@@ -42,70 +49,79 @@ const HybridNavbar = () => {
         }
     }, [location.pathname]);
 
-    const closeMobileMenu = () => {
-        setIsMobileMenuOpen(false);
-    };
+    const closeMobileMenu = () => setIsMobileMenuOpen(false);
 
     return (
-        <nav className="hybrid-navbar" role="navigation" aria-label="Main navigation">
-            <div className="navbar-container">
+        <nav 
+            className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+                scrolled ? 'bg-white/90 backdrop-blur-md shadow-soft py-2' : 'bg-white py-4'
+            }`}
+            role="navigation" 
+            aria-label="Main navigation"
+        >
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
                 {/* Logo */}
-                <RouterLink to="/" className="navbar-logo">
-                    <motion.h1
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5 }}
+                <RouterLink to="/" className="flex items-center gap-3 z-50 relative group">
+                    <motion.div 
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        className="w-10 h-10 bg-gradient-to-br from-primary-600 to-primary-800 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg group-hover:shadow-primary-500/30 transition-shadow"
                     >
-                        BookHope NGO
-                    </motion.h1>
+                        S
+                    </motion.div>
+                    <div className="flex flex-col">
+                        <span className="font-extrabold text-sm tracking-wide text-primary-900 leading-none">SHAILENDRA KUMAR</span>
+                        <span className="font-bold text-xs tracking-wider text-secondary-500 leading-none mt-0.5">AJAY FOUNDATION</span>
+                    </div>
                 </RouterLink>
 
-                {/* Desktop Menu - Always use Router Navigation */}
-                <div className="navbar-menu-desktop" ref={navRef}>
+                {/* Desktop Menu */}
+                <div className="hidden xl:flex items-center gap-1 relative" ref={navRef}>
                     {menuItems.map((item) => (
                         <RouterLink
                             key={item.id}
                             to={item.path}
-                            className={`nav-link ${activeSection === item.id ? 'active' : ''}`}
+                            className={`relative px-4 py-2 text-sm font-semibold transition-colors rounded-lg hover:bg-primary-50 ${
+                                activeSection === item.id ? 'text-primary-700' : 'text-text-light hover:text-primary-600'
+                            }`}
                             data-section={item.id}
-                            aria-label={`Navigate to ${item.label}`}
                         >
                             {item.label}
                         </RouterLink>
                     ))}
-
+                    
                     {/* Animated Underline */}
                     <motion.div
-                        className="nav-underline"
+                        className="absolute bottom-0 h-0.5 bg-secondary-500 rounded-full pointer-events-none"
                         animate={{
-                            left: underlineStyle.left,
-                            width: underlineStyle.width,
+                            left: underlineStyle.left + 16, // Adjust for padding
+                            width: underlineStyle.width - 32,
                         }}
                         transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                     />
                 </div>
 
-                {/* Donate Button */}
-                <motion.div
-                    className="navbar-donate-btn"
-                    whileHover={{ scale: 1.05, boxShadow: '0 0 20px rgba(255, 215, 0, 0.6)' }}
-                    whileTap={{ scale: 0.95 }}
-                >
-                    <RouterLink
-                        to="/donate"
-                        className="donate-button"
-                        aria-label="Donate Now"
+                {/* Right Actions */}
+                <div className="hidden md:flex items-center gap-4">
+                    <motion.div
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
                     >
-                        Donate Now
-                    </RouterLink>
-                </motion.div>
+                        <RouterLink
+                            to="/donate"
+                            className="bg-gradient-to-r from-secondary-400 to-secondary-500 text-white px-6 py-2.5 rounded-full font-bold shadow-lg shadow-secondary-500/30 hover:shadow-secondary-500/50 transition-all text-sm flex items-center gap-2"
+                        >
+                            <span>Donate Now</span>
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        </RouterLink>
+                    </motion.div>
+                </div>
 
-                {/* Mobile Hamburger Icon */}
+                {/* Mobile Menu Toggle */}
                 <button
-                    className="mobile-menu-toggle"
+                    className="xl:hidden p-2 text-primary-900 rounded-lg hover:bg-primary-50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-100"
                     onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
-                    aria-expanded={isMobileMenuOpen}
                 >
                     <AnimatePresence mode="wait">
                         {isMobileMenuOpen ? (
@@ -114,9 +130,8 @@ const HybridNavbar = () => {
                                 initial={{ rotate: -90, opacity: 0 }}
                                 animate={{ rotate: 0, opacity: 1 }}
                                 exit={{ rotate: 90, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
                             >
-                                <X size={28} />
+                                <X size={24} />
                             </motion.div>
                         ) : (
                             <motion.div
@@ -124,99 +139,68 @@ const HybridNavbar = () => {
                                 initial={{ rotate: 90, opacity: 0 }}
                                 animate={{ rotate: 0, opacity: 1 }}
                                 exit={{ rotate: -90, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
                             >
-                                <Menu size={28} />
+                                <Menu size={24} />
                             </motion.div>
                         )}
                     </AnimatePresence>
                 </button>
             </div>
 
-            {/* Mobile Menu */}
+            {/* Mobile Menu Overlay */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <>
-                        {/* Backdrop */}
                         <motion.div
-                            className="mobile-menu-backdrop"
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={closeMobileMenu}
+                            className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 xl:hidden"
                         />
-
-                        {/* Mobile Menu Panel */}
                         <motion.div
-                            className="mobile-menu-panel"
                             initial={{ x: '100%' }}
                             animate={{ x: 0 }}
                             exit={{ x: '100%' }}
                             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                            className="fixed top-0 right-0 bottom-0 w-[280px] bg-white shadow-2xl z-50 xl:hidden flex flex-col overflow-hidden"
                         >
-                            <motion.div
-                                className="mobile-menu-items"
-                                initial="closed"
-                                animate="open"
-                                exit="closed"
-                                variants={{
-                                    open: {
-                                        transition: { staggerChildren: 0.07, delayChildren: 0.2 }
-                                    },
-                                    closed: {
-                                        transition: { staggerChildren: 0.05, staggerDirection: -1 }
-                                    }
-                                }}
-                            >
-                                {menuItems.map((item) => (
-                                    <motion.div
-                                        key={item.id}
-                                        variants={{
-                                            open: {
-                                                y: 0,
-                                                opacity: 1,
-                                                transition: {
-                                                    y: { stiffness: 1000, velocity: -100 }
-                                                }
-                                            },
-                                            closed: {
-                                                y: 50,
-                                                opacity: 0,
-                                                transition: {
-                                                    y: { stiffness: 1000 }
-                                                }
-                                            }
-                                        }}
-                                    >
+                            <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-primary-50/50">
+                                <span className="font-bold text-primary-900">Menu</span>
+                                <button onClick={closeMobileMenu} className="p-2 text-primary-500 hover:bg-primary-100 rounded-full transition-colors">
+                                    <X size={20} />
+                                </button>
+                            </div>
+                            
+                            <div className="flex-1 overflow-y-auto py-4 px-4">
+                                <div className="flex flex-col gap-2">
+                                    {menuItems.map((item) => (
                                         <RouterLink
+                                            key={item.id}
                                             to={item.path}
                                             onClick={closeMobileMenu}
-                                            className={`mobile-nav-link ${activeSection === item.id ? 'active' : ''}`}
-                                            aria-label={`Navigate to ${item.label}`}
+                                            className={`px-4 py-3 rounded-xl text-sm font-semibold transition-all ${
+                                                activeSection === item.id 
+                                                ? 'bg-primary-50 text-primary-700' 
+                                                : 'text-text-light hover:bg-gray-50 hover:text-primary-600'
+                                            }`}
                                         >
                                             {item.label}
                                         </RouterLink>
-                                    </motion.div>
-                                ))}
+                                    ))}
+                                </div>
+                            </div>
 
-                                {/* Mobile Donate Button */}
-                                <motion.div
-                                    variants={{
-                                        open: { y: 0, opacity: 1 },
-                                        closed: { y: 50, opacity: 0 }
-                                    }}
-                                    className="mobile-donate-wrapper"
+                            <div className="p-6 border-t border-gray-100 bg-gray-50">
+                                <RouterLink
+                                    to="/donate"
+                                    onClick={closeMobileMenu}
+                                    className="w-full flex items-center justify-center gap-2 bg-secondary-500 text-white py-3 rounded-xl font-bold shadow-lg hover:bg-secondary-600 transition-colors"
                                 >
-                                    <RouterLink
-                                        to="/donate"
-                                        onClick={closeMobileMenu}
-                                        className="mobile-donate-button"
-                                        aria-label="Donate Now"
-                                    >
-                                        Donate Now
-                                    </RouterLink>
-                                </motion.div>
-                            </motion.div>
+                                    <span>Donate Now</span>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                                </RouterLink>
+                            </div>
                         </motion.div>
                     </>
                 )}

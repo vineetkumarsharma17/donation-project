@@ -41,7 +41,7 @@ const AboutSectionScroll = () => {
                     {/* Section Header */}
                     <motion.div className="section-header" variants={itemVariants}>
                         <span className="section-tag">Who We Are</span>
-                        <h2 className="section-title">About BookHope NGO</h2>
+                        <h2 className="section-title">About SHAILENDRA KUMAR AJAY FOUNDATION</h2>
                         <div className="title-underline"></div>
                     </motion.div>
 
@@ -73,7 +73,7 @@ const AboutSectionScroll = () => {
                         >
                             <h3 className="about-subtitle">Our Story</h3>
                             <p className="about-description">
-                                Founded in 2009, BookHope NGO began with a simple mission: to ensure every child has access
+                                Founded in 2009, SHAILENDRA KUMAR AJAY FOUNDATION began with a simple mission: to ensure every child has access
                                 to quality educational resources. What started as a small book donation drive has grown into
                                 a nationwide movement, touching the lives of thousands of children across India.
                             </p>
