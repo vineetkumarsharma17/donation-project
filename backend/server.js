@@ -146,7 +146,7 @@ async function sendReceiptEmail(donation) {
     const mailOptions = {
         from: process.env.EMAIL_USER,
         to: donation.email,
-        subject: 'Thank You for Your Donation - BookHope NGO',
+        subject: 'Thank You for Your Donation - SHAILENDRA KUMAR AJAY FOUNDATION',
         html: `
             <!DOCTYPE html>
             <html>
@@ -167,7 +167,7 @@ async function sendReceiptEmail(donation) {
             <body>
                 <div class="container">
                     <div class="header">
-                        <div class="logo">📚 BookHope NGO</div>
+                        <div class="logo">📚 SHAILENDRA KUMAR AJAY FOUNDATION</div>
                         <h1>Thank You for Your Donation!</h1>
                     </div>
                     
@@ -210,7 +210,7 @@ async function sendReceiptEmail(donation) {
                     </div>
                     
                     <div class="footer">
-                        <p>With gratitude,<br><strong>BookHope NGO Team</strong></p>
+                        <p>With gratitude,<br><strong>SHAILENDRA KUMAR AJAY FOUNDATION Team</strong></p>
                         <p style="font-size: 0.9rem; color: #666;">
                             For any queries, contact us at support@bookhope.org<br>
                             📞 +91 XXXXX XXXXX

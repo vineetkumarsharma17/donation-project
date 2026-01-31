@@ -86,7 +86,7 @@ const BlogPage = () => {
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
                     <h1 className="blog-hero-title">Stories That Inspire Change</h1>
-                    <p className="blog-hero-subtitle">
+                    <p className="blog-hero-subtitle text-white">
                         Discover the impact of education, the power of books, and the voices of communities we serve.
                     </p>
                 </motion.div>

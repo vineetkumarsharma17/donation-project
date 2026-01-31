@@ -11,16 +11,15 @@ import ContactSectionScroll from '../components/ContactSectionScroll';
 import GetInvolvedSectionScroll from '../components/GetInvolvedSectionScroll';
 import FooterNew from '../components/FooterNew';
 import MobileStickyDonateBar from '../components/MobileStickyDonateBar';
-import './SinglePageHome.css';
 
 const SinglePageHome = () => {
     return (
-        <div className="single-page-home">
+        <div className="w-full overflow-x-hidden bg-background-light text-text">
             {/* Sticky Navigation */}
             <HybridNavbar />
 
             {/* All Sections */}
-            <main className="main-content">
+            <main className="flex flex-col">
                 <Element name="home">
                     <HeroSectionScroll />
                 </Element>

@@ -13,7 +13,10 @@ const AboutPage = () => {
             {/* Blue Header Section */}
             <header className="about-header">
                 <h1>About Our Foundation</h1>
-                <p>Empowering communities through education and building brighter futures for children across India.</p>
+                <p className="text-white">
+  Empowering communities through education and building brighter futures for children across India.
+</p>
+
             </header>
 
             {/* Main Content Section */}

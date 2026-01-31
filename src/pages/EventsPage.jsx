@@ -101,7 +101,7 @@ const EventsPage = () => {
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
                     <h1 className="events-hero-title">Upcoming Events</h1>
-                    <p className="events-hero-subtitle">
+                    <p className="events-hero-subtitle text-white">
                         Join us in making a difference. Participate in our events and help spread the joy of reading.
                     </p>
                 </motion.div>

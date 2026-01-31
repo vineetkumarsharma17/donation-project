@@ -1,4 +1,4 @@
-# BookHope NGO - Single Page Website
+# SHAILENDRA KUMAR AJAY FOUNDATION - Single Page Website
 
 A modern, fully responsive single-page NGO website built with React, featuring smooth scroll navigation, beautiful animations, and a premium design.
 
@@ -257,7 +257,7 @@ Contributions, issues, and feature requests are welcome!
 
 ## 📧 Contact
 
-For questions or support, please contact: info@bookhope.org
+For questions or support, please contact: shailksingh6387@gmail.com
 
 ---
 
