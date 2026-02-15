@@ -53,7 +53,7 @@ const HeroSectionScroll = () => {
                             onClick={() => navigate('/donate')}
                             className="btn bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-500/30 border border-transparent"
                         >
-                            Start Donating
+                            DONATE NOW
                         </button>
                         <button 
                             onClick={() => navigate('/about')}

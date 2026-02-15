@@ -32,7 +32,7 @@ const AboutSectionScroll = () => {
                                         <Award size={24} className="text-white" />
                                     </div>
                                     <div>
-                                        <p className="text-2xl font-bold">15+ Years</p>
+                                        <p className="text-2xl font-bold text-white">15+ Years</p>
                                         <p className="text-sm text-indigo-200">Of Impactful Service</p>
                                     </div>
                                 </div>

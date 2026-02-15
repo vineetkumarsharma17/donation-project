@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Loader } from 'lucide-react';
+import { Loader, CheckCircle, XCircle } from 'lucide-react';
+import { processRazorpayPayment } from '../utils/razorpay';
 
 const DonationForm = ({ onScrollToQr }) => {
     const [donationType, setDonationType] = useState('onetime');
     const [selectedAmount, setSelectedAmount] = useState(null);
     const [customAmount, setCustomAmount] = useState('');
     const [isProcessing, setIsProcessing] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const [paymentDetails, setPaymentDetails] = useState(null);
     
     // Donor Details State
     const [donorDetails, setDonorDetails] = useState({
@@ -33,85 +38,152 @@ const DonationForm = ({ onScrollToQr }) => {
         return selectedAmount || parseInt(customAmount) || 0;
     };
 
-    const loadRazorpay = () => {
-        return new Promise((resolve) => {
-            const script = document.createElement('script');
-            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-            script.onload = () => resolve(true);
-            script.onerror = () => resolve(false);
-            document.body.appendChild(script);
-        });
+    const validateForm = () => {
+        const amount = getFinalAmount();
+        
+        if (amount < 100) {
+            setErrorMessage('Minimum donation amount is ₹100');
+            setShowError(true);
+            setTimeout(() => setShowError(false), 3000);
+            return false;
+        }
+
+        if (!donorDetails.name.trim()) {
+            setErrorMessage('Please enter your name');
+            setShowError(true);
+            setTimeout(() => setShowError(false), 3000);
+            return false;
+        }
+
+        if (!donorDetails.email.trim() || !donorDetails.email.includes('@')) {
+            setErrorMessage('Please enter a valid email address');
+            setShowError(true);
+            setTimeout(() => setShowError(false), 3000);
+            return false;
+        }
+
+        if (!donorDetails.phone.trim() || donorDetails.phone.length < 10) {
+            setErrorMessage('Please enter a valid phone number');
+            setShowError(true);
+            setTimeout(() => setShowError(false), 3000);
+            return false;
+        }
+
+        return true;
     };
 
     const handleDonation = async () => {
+        // Reset states
+        setShowError(false);
+        setShowSuccess(false);
+
+        // Validate form
+        if (!validateForm()) {
+            return;
+        }
+
         const amount = getFinalAmount();
-        if (amount < 100) {
-            alert('Minimum donation amount is ₹100');
-            return;
-        }
-
-        if (!donorDetails.name || !donorDetails.email || !donorDetails.phone) {
-            alert('Please fill all required fields');
-            return;
-        }
-
         setIsProcessing(true);
 
         try {
-            const res = await loadRazorpay();
-            if (!res) {
-                alert('Razorpay SDK failed to load. Please check your internet connection.');
-                setIsProcessing(false);
-                return;
-            }
-
-            const options = {
-                key: 'rzp_test_YOUR_KEY_HERE', // Replace with actual key
-                amount: amount * 100,
-                currency: 'INR',
-                name: 'SHAILENDRA KUMAR AJAY FOUNDATION',
-                description: `${donationType === 'monthly' ? 'Monthly' : 'One-time'} Donation`,
-                image: '/logo.png',
-                handler: function (response) {
-                    console.log('Payment Success:', response);
+            await processRazorpayPayment({
+                amount,
+                donorDetails: {
+                    ...donorDetails,
+                    donationType
+                },
+                onSuccess: (result) => {
+                    console.log('✅ Payment successful:', result);
                     setIsProcessing(false);
-                    alert(`Thank you! Payment ID: ${response.razorpay_payment_id}`);
-                    // Ideally redirect to success page or show success state
-                    window.location.href = '/'; 
+                    setPaymentDetails(result);
+                    setShowSuccess(true);
+                    
+                    // Reset form after 3 seconds
+                    setTimeout(() => {
+                        resetForm();
+                    }, 5000);
                 },
-                prefill: {
-                    name: donorDetails.name,
-                    email: donorDetails.email,
-                    contact: donorDetails.phone
-                },
-                notes: {
-                    donation_type: donationType,
-                    is_dedicated: donorDetails.isDedicated,
-                    dedication_message: donorDetails.dedicationMessage
-                },
-                theme: {
-                    color: '#4a7c2c'
-                },
-                modal: {
-                    ondismiss: function () {
-                        setIsProcessing(false);
-                    }
+                onFailure: (error) => {
+                    console.error('❌ Payment failed:', error);
+                    setIsProcessing(false);
+                    setErrorMessage(error.message || 'Payment failed. Please try again.');
+                    setShowError(true);
+                    setTimeout(() => setShowError(false), 5000);
                 }
-            };
-
-            const paymentObject = new window.Razorpay(options);
-            paymentObject.open();
+            });
 
         } catch (error) {
-            console.error('Payment Error:', error);
-            alert('Payment failed. Please try again.');
+            console.error('❌ Payment error:', error);
             setIsProcessing(false);
+            setErrorMessage(error.message || 'An error occurred. Please try again.');
+            setShowError(true);
+            setTimeout(() => setShowError(false), 5000);
         }
     };
 
+    const resetForm = () => {
+        setSelectedAmount(null);
+        setCustomAmount('');
+        setDonorDetails({
+            name: '',
+            email: '',
+            phone: '',
+            isDedicated: false,
+            dedicationMessage: ''
+        });
+        setShowSuccess(false);
+        setPaymentDetails(null);
+    };
+
     return (
-        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6">
+        <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 relative">
             <h2 className="text-xl font-bold text-gray-800 mb-4">Make a Donation</h2>
+
+            {/* Success Modal */}
+            {showSuccess && (
+                <div className="absolute inset-0 bg-white rounded-2xl z-50 flex items-center justify-center p-6">
+                    <div className="text-center">
+                        <div className="mb-4 flex justify-center">
+                            <CheckCircle className="w-16 h-16 text-green-500" />
+                        </div>
+                        <h3 className="text-2xl font-bold text-gray-800 mb-2">Thank You!</h3>
+                        <p className="text-gray-600 mb-4">
+                            Your donation of <strong>₹{getFinalAmount()}</strong> was successful!
+                        </p>
+                        {paymentDetails && (
+                            <p className="text-sm text-gray-500 mb-4">
+                                Payment ID: {paymentDetails.payment_id}
+                            </p>
+                        )}
+                        <p className="text-sm text-gray-600">
+                            You will receive a confirmation email shortly.
+                        </p>
+                        <button
+                            onClick={resetForm}
+                            className="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                        >
+                            Make Another Donation
+                        </button>
+                    </div>
+                </div>
+            )}
+
+            {/* Error Alert */}
+            {showError && (
+                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3 animate-shake">
+                    <XCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                        <p className="text-sm font-semibold text-red-800">Error</p>
+                        <p className="text-sm text-red-600">{errorMessage}</p>
+                    </div>
+                    <button
+                        onClick={() => setShowError(false)}
+                        className="text-red-400 hover:text-red-600"
+                    >
+                        ×
+                    </button>
+                </div>
+            )}
 
             {/* Donation Type Toggle */}
             <div className="flex bg-gray-100 rounded-lg p-1 mb-6">
@@ -120,6 +192,7 @@ const DonationForm = ({ onScrollToQr }) => {
                         donationType === 'onetime' ? 'bg-white text-green-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                     }`}
                     onClick={() => setDonationType('onetime')}
+                    disabled={isProcessing}
                 >
                     One-time
                 </button>
@@ -128,6 +201,7 @@ const DonationForm = ({ onScrollToQr }) => {
                         donationType === 'monthly' ? 'bg-white text-green-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'
                     }`}
                     onClick={() => setDonationType('monthly')}
+                    disabled={isProcessing}
                 >
                     Monthly
                 </button>
@@ -144,6 +218,7 @@ const DonationForm = ({ onScrollToQr }) => {
                                 : 'border-gray-200 hover:border-green-400 text-gray-700'
                         }`}
                         onClick={() => handleAmountSelect(amount)}
+                        disabled={isProcessing}
                     >
                         ₹{amount.toLocaleString()}
                     </button>
@@ -158,9 +233,10 @@ const DonationForm = ({ onScrollToQr }) => {
                     placeholder="Enter custom amount"
                     value={customAmount}
                     onChange={handleCustomAmountChange}
+                    disabled={isProcessing}
                     className={`w-full pl-8 pr-4 py-3 border rounded-lg outline-none transition-all font-semibold ${
                         customAmount ? 'border-green-600 bg-green-50 text-green-900' : 'border-gray-200 focus:border-green-500'
-                    }`}
+                    } disabled:opacity-50 disabled:cursor-not-allowed`}
                 />
             </div>
 
@@ -178,26 +254,29 @@ const DonationForm = ({ onScrollToQr }) => {
                 <div>
                     <input
                         type="text"
-                        placeholder="Full Name"
+                        placeholder="Full Name *"
                         value={donorDetails.name}
                         onChange={(e) => setDonorDetails({ ...donorDetails, name: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all text-sm"
+                        disabled={isProcessing}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <input
                         type="email"
-                        placeholder="Email Address"
+                        placeholder="Email Address *"
                         value={donorDetails.email}
                         onChange={(e) => setDonorDetails({ ...donorDetails, email: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all text-sm"
+                        disabled={isProcessing}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                     <input
                         type="tel"
-                        placeholder="Phone Number"
+                        placeholder="Phone Number *"
                         value={donorDetails.phone}
                         onChange={(e) => setDonorDetails({ ...donorDetails, phone: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all text-sm"
+                        disabled={isProcessing}
+                        className="w-full px-4 py-3 border border-gray-200 rounded-lg outline-none focus:border-green-500 focus:ring-1 focus:ring-green-500 transition-all text-sm disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                 </div>
 
@@ -208,7 +287,8 @@ const DonationForm = ({ onScrollToQr }) => {
                         id="dedicate"
                         checked={donorDetails.isDedicated}
                         onChange={(e) => setDonorDetails({ ...donorDetails, isDedicated: e.target.checked })}
-                        className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                        disabled={isProcessing}
+                        className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 disabled:opacity-50"
                     />
                     <label htmlFor="dedicate" className="text-sm text-gray-600 select-none cursor-pointer">Dedicate this donation</label>
                 </div>
@@ -218,27 +298,37 @@ const DonationForm = ({ onScrollToQr }) => {
                         placeholder="Message (Optional)"
                         value={donorDetails.dedicationMessage}
                         onChange={(e) => setDonorDetails({ ...donorDetails, dedicationMessage: e.target.value })}
-                        className="w-full px-4 py-2 border border-gray-200 rounded-lg outline-none focus:border-green-500 text-sm h-20 resize-none"
+                        disabled={isProcessing}
+                        className="w-full px-4 py-2 border border-gray-200 rounded-lg outline-none focus:border-green-500 text-sm h-20 resize-none disabled:opacity-50 disabled:cursor-not-allowed"
                     />
                 )}
             </div>
 
             {/* Donate Button */}
             <button
-                className={`w-full mt-6 py-4 rounded-xl font-bold text-white shadow-lg transition-transform active:scale-95 flex justify-center items-center gap-2 ${
+                className={`w-full mt-6 py-4 rounded-xl font-bold text-white shadow-lg transition-all flex justify-center items-center gap-2 ${
                     isProcessing || getFinalAmount() < 100 
                     ? 'bg-gray-400 cursor-not-allowed' 
-                    : 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600'
+                    : 'bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 active:scale-95'
                 }`}
                 onClick={handleDonation}
                 disabled={isProcessing || getFinalAmount() < 100}
             >
-                {isProcessing ? <Loader className="animate-spin" size={20} /> : 'Donate Now'}
-                {!isProcessing && getFinalAmount() > 0 && <span>(₹{getFinalAmount()})</span>}
+                {isProcessing ? (
+                    <>
+                        <Loader className="animate-spin" size={20} />
+                        <span>Processing...</span>
+                    </>
+                ) : (
+                    <>
+                        <span>Donate Now</span>
+                        {getFinalAmount() > 0 && <span>(₹{getFinalAmount().toLocaleString()})</span>}
+                    </>
+                )}
             </button>
 
-             <p className="text-center text-xs text-gray-400 mt-4">
-                Secure SSL encrypted payment
+            <p className="text-center text-xs text-gray-400 mt-4">
+                🔒 Secure SSL encrypted payment via Razorpay
             </p>
         </div>
     );
