@@ -1,7 +1,7 @@
 // Razorpay Utility Functions - Production Ready
 // Handles all Razorpay payment operations
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001';
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || '';
 const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
 /**
